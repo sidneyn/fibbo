@@ -13,7 +13,7 @@ public class ProdutoDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private Integer id;
-    @NotNull(message = "Campo NOME não pode ser nulo")
+	@NotNull(message = "Campo NOME não pode ser nulo")
 	private String nome;
     @NotNull(message = "Campo PREÇO DE CUSTO não pode ser nulo")
 	private String preco_custo;
@@ -21,16 +21,16 @@ public class ProdutoDTO implements Serializable {
 	private String preco_venda;
 	private String qtd_estoque;
 	@JsonFormat(pattern = "dd/MM/yyyy")	
-	private LocalDate dataAtualizacao;
+	private LocalDate dataAtualizacao = LocalDate.now();
 	@JsonFormat(pattern = "dd/MM/yyyy")
-	protected LocalDate dataCadastro;
-	private Usuario usuario;
+	protected LocalDate dataCadastro = LocalDate.now();
+	@NotNull(message = "Campo Usuario não pode ser nulo")
+	private Integer usuario;
 	private String nomeUsuario;
 
-	
+		
 	public ProdutoDTO() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	public ProdutoDTO(Produto obj) {
@@ -42,7 +42,7 @@ public class ProdutoDTO implements Serializable {
 		this.qtd_estoque = obj.getQtd_estoque();
 		this.dataAtualizacao = obj.getDataAtualizacao();
 		this.dataCadastro = obj.getDataCadastro();
-		this.usuario = obj.getUsuario();
+		this.usuario = obj.getUsuario().getId();
 		this.nomeUsuario = obj.getUsuario().getNome();
 	}
 
@@ -102,11 +102,11 @@ public class ProdutoDTO implements Serializable {
 		this.dataCadastro = dataCadastro;
 	}
 
-	public Usuario getUsuario() {
+	public Integer getUsuario() {
 		return usuario;
 	}
 
-	public void setUsuario(Usuario usuario) {
+	public void setUsuario(Integer usuario) {
 		this.usuario = usuario;
 	}
 

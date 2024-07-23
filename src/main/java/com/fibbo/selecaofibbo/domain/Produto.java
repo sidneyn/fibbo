@@ -14,6 +14,7 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fibbo.selecaofibbo.domain.dtos.ProdutoDTO;
 import com.fibbo.selecaofibbo.domain.dtos.UsuarioDTO;
 
@@ -24,24 +25,23 @@ public class Produto implements Serializable {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;
-    @NotNull(message = "Campo NOME não pode ser nulo")
-	private String nome;
-    @NotNull(message = "Campo PREÇO DE CUSTO não pode ser nulo")
-	private String preco_custo;
-    @NotNull(message = "Campo PREÇO DE VENDA não pode ser nulo")
+	private Integer id;   
+	private String nome;   
+	private String preco_custo;   
 	private String preco_venda;
 	private String qtd_estoque;
+	
 	@JsonFormat(pattern = "dd/MM/yyyy")	
 	private LocalDate dataAtualizacao = LocalDate.now();
 	@JsonFormat(pattern = "dd/MM/yyyy")
 	protected LocalDate dataCadastro = LocalDate.now();
 
+	@JsonIgnore
 	@ManyToOne  // @ManyToOne Muitos Produtos para um usuario 
 	@JoinColumn(name = "usuario_id")
-	@NotNull(message = "Campo Usuario não pode ser nulo")
+	
 	private Usuario usuario;
-	private String nomeUsuario;
+//	private String nomeUsuario;
 
 	public Produto() {
 		super();
@@ -50,26 +50,19 @@ public class Produto implements Serializable {
 	}
 
 	public Produto(Integer id, String nome, String preco_custo, String preco_venda, String qtd_estoque,
-			Usuario usuario) {
+			LocalDate dataAtualizacao, LocalDate dataCadastro, Usuario usuario, String nomeUsuario) {
 		super();
 		this.id = id;
 		this.nome = nome;
 		this.preco_custo = preco_custo;
 		this.preco_venda = preco_venda;
-		this.qtd_estoque = qtd_estoque;		
+		this.qtd_estoque = qtd_estoque;
+		this.dataAtualizacao = dataAtualizacao;
+		this.dataCadastro = dataCadastro;
 		this.usuario = usuario;
+		
 	}
 
-	public Produto(ProdutoDTO obj) { 
-		super();
-		 this.id = obj.getId();
-		 this.nome = obj.getNome();
-		 this.preco_custo = obj.getPreco_custo();		 
-		 this.preco_venda = obj.getPreco_venda();
-		 this.qtd_estoque = obj.getQtd_estoque();
-		 this.dataAtualizacao = obj.getDataAtualizacao();
-		 this.usuario = obj.getUsuario();
-	}
 	
 	public Integer getId() {
 		return id;

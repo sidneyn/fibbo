@@ -32,7 +32,7 @@ public class UsuarioService {
 		return repository.findAll();
 	}
 	
-	public Usuario create(UsuarioDTO objDTO) {
+	public Usuario create(UsuarioDTO objDTO) {		 
 		objDTO.setId(null);
 		objDTO.setSenha(objDTO.getSenha());
 		//validaPorCpfEmail(objDTO);

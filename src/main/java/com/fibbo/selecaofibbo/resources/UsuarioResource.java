@@ -42,8 +42,8 @@ public class UsuarioResource {
 		return ResponseEntity.ok().body(listDTO);
 	}	
 	
-	
-	public ResponseEntity<UsuarioDTO> create(@Valid @RequestBody UsuarioDTO objDTO) {
+	@PostMapping
+	public ResponseEntity<UsuarioDTO> create(@Valid @RequestBody UsuarioDTO objDTO) {	
 		Usuario newObj = service.create(objDTO);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(newObj.getId()).toUri();
 		return ResponseEntity.created(uri).build();
