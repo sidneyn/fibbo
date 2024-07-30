@@ -1,21 +1,16 @@
 package com.fibbo.selecaofibbo.domain;
 
 import java.io.Serializable;
-import java.time.LocalDate;
 import java.util.Date;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
-
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fibbo.selecaofibbo.domain.dtos.UsuarioDTO;   
 
 @Entity
-
+@Table (name = "usuario")
 public class Usuario implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -23,48 +18,39 @@ public class Usuario implements Serializable {
 	@OneToMany(mappedBy = "usuario")  // @OneToMany um usuario para muitos produtos 
 	private List<Produto> produtos = new ArrayList<>(); // arralist para nao ter o ponteiro nulo.
 
-	 @Id
-	 @GeneratedValue(strategy = GenerationType.IDENTITY)
-	 protected Integer id;
-	 
-	 @NotNull(message = "O campo NOME é requerido")
-	 protected String nome;
-	 
-	 @NotNull(message = "O campo EMAIL é requerido")
-	 protected String email;
-	 
-	 @NotNull(message = "O campo CPF é requerido")
-	 protected String cpf;
-	 
-	 @NotNull(message = "O campo SENHA é requerido")
-	 protected String senha;	
-	 
-	 @JsonFormat(pattern = "dd/MM/yyyy")
-	 protected LocalDate dataCriacao = LocalDate.now();
-	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Integer id;
+	private String nome;
+	private String email;
+	private String cpf;
+	private String senha;
+		
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date dataCadastro;
+
 	public Usuario() {
 			super();
 	}
+
 	
-	public Usuario(Integer id, String nome, String email, String cpf, String senha, LocalDate dataCriacao) {		
+	public Usuario(Integer id, String nome, String email, String cpf, String senha) {
 		super();
 		this.id = id;
 		this.nome = nome;
 		this.email = email;
 		this.cpf = cpf;
 		this.senha = senha;
-		this.dataCriacao = dataCriacao;
 	}
 
 
-	public Usuario(UsuarioDTO obj) { 		
+	public Usuario(UsuarioDTO obj) { 
 		super();
 		 this.id = obj.getId();
 		 this.nome = obj.getNome();
-		 this.email = obj.getEmail();
+		 this.email = obj.getEmail();		 
 		 this.cpf = obj.getCpf();
 		 this.senha = obj.getSenha();
-		 this.dataCriacao = obj.getDataCriacao();
 	}
 	
 	public List<Produto> getProdutos() {
@@ -115,31 +101,12 @@ public class Usuario implements Serializable {
 		this.senha = senha;
 	}
 
-	public LocalDate getDataCriacao() {
-		return dataCriacao;
+	public Date getDataCadastro() {
+		return dataCadastro;
 	}
 
-	public void setDataCriacao(LocalDate dataCadastro) {
-		this.dataCriacao = dataCriacao;
+	public void setDataCadastro(Date dataCadastro) {
+		this.dataCadastro = dataCadastro;
 	}
-
-
-	@Override
-	public int hashCode() {
-		return Objects.hash(cpf, id);
-	}
-
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Usuario other = (Usuario) obj;
-		return Objects.equals(cpf, other.cpf) && Objects.equals(id, other.id);
-	}
-
+	
 }
