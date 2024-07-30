@@ -38,8 +38,7 @@ public class Produto implements Serializable {
 
 	@JsonIgnore
 	@ManyToOne  // @ManyToOne Muitos Produtos para um usuario 
-	@JoinColumn(name = "usuario_id")
-	
+	@JoinColumn(name = "usuario_id")	
 	private Usuario usuario;
 //	private String nomeUsuario;
 
@@ -60,6 +59,19 @@ public class Produto implements Serializable {
 		this.dataAtualizacao = dataAtualizacao;
 		this.dataCadastro = dataCadastro;
 		this.usuario = usuario;
+		
+	}
+	
+	public Produto(ProdutoDTO objDTO) {
+		super();
+		this.id = objDTO.getId();
+		this.nome = nome;
+		this.preco_custo = objDTO.getPreco_custo();
+		this.preco_venda = objDTO.getPreco_venda();
+		this.qtd_estoque = objDTO.getQtd_estoque();
+		this.dataAtualizacao = objDTO.getDataAtualizacao();
+		this.dataCadastro = objDTO.getDataCadastro();
+	//	this.usuario = objDTO.getUsuario();
 		
 	}
 

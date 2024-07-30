@@ -13,7 +13,7 @@ import com.fibbo.selecaofibbo.domain.dtos.UsuarioDTO;
 import com.fibbo.selecaofibbo.domain.Usuario;
 import com.fibbo.selecaofibbo.repository.ProdutoRepository;
 import com.fibbo.selecaofibbo.repository.UsuarioRepository;
-import com.fibbo.selecaofibbo.services.exceptions.ObjectnotFoundException;
+import com.fibbo.selecaofibbo.service.exceptions.ObjectnotFoundException;
 
 @Service
 public class UsuarioService {

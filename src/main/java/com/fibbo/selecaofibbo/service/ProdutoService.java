@@ -15,7 +15,7 @@ import com.fibbo.selecaofibbo.domain.Produto;
 import com.fibbo.selecaofibbo.domain.Usuario;
 import com.fibbo.selecaofibbo.repository.ProdutoRepository;
 import com.fibbo.selecaofibbo.repository.UsuarioRepository;
-import com.fibbo.selecaofibbo.services.exceptions.ObjectnotFoundException;
+import com.fibbo.selecaofibbo.service.exceptions.ObjectnotFoundException;
 
 @Service
 public class ProdutoService {
@@ -23,7 +23,7 @@ public class ProdutoService {
 	@Autowired
 	private ProdutoRepository repository;
 	@Autowired
-	private UsuarioRepository usuarioRepository;
+	private UsuarioService usuarioService;
 	
 	public Produto findById(Integer id) {
 		Optional<Produto> obj = repository.findById(id);
@@ -36,22 +36,41 @@ public class ProdutoService {
 	
 	public Produto create(ProdutoDTO objDTO) {
 		objDTO.setId(null);
-		
-		
-		Produto newObj = new Produto (objDTO);
+		Produto newObj = newProduto(objDTO);
 		return repository.save(newObj);
 	}
 	
 	public Produto update (Integer id, @Valid ProdutoDTO objDTO) {
 		objDTO.setId(id);
-		Produto oldObj = findById(id);
-		//validaPorCpfEmail(objDTO);
-		oldObj = new Produto(objDTO);
+		Produto oldObj = findById(id);		
+		oldObj = newProduto(objDTO);
 		return repository.save(oldObj);				
 	}
 	
 	public void delete(Integer id) {
 		Produto obj = findById(id);
 		repository.deleteById(id);
+	}
+	
+	private Produto newProduto(ProdutoDTO obj) {
+		Usuario usuario = usuarioService.findById(obj.getUsuario());
+		
+		
+		Produto produto = new Produto();
+		if(obj.getId() != null) {
+			produto.setId(obj.getId());
+		}
+				
+		
+		produto.setUsuario(usuario);		
+		produto.setDataAtualizacao(obj.getDataAtualizacao());		
+		produto.setDataCadastro(obj.getDataCadastro());		
+		produto.setNome(obj.getNome());
+		produto.setPreco_custo(obj.getPreco_custo());
+		produto.setPreco_venda(obj.getPreco_venda());
+		produto.setQtd_estoque(obj.getQtd_estoque());
+		produto.setQtd_estoque(obj.getQtd_estoque());
+		
+		return produto;
 	}
 }
