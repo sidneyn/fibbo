@@ -1,6 +1,8 @@
 package com.fibbo.selecaofibbo;
 
+import java.time.LocalDate;
 import java.util.Arrays;
+import java.util.Calendar;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -25,8 +27,8 @@ public class SelecaofibboApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		Usuario usu1 = new Usuario (null, "Sidney Nogueira", "sidney@email.com", "63653230268", "123");
 		
+		Usuario usu1 = new Usuario (null, "Sidney Nogueira", "sidney@email.com", "63653230268", "123",LocalDate.now());
 		//Produto prod1 = new Produto(null, "testes", "20", "40", "5", null, null, usu1, usu1.getNome());
 				
 		usuarioRepository.saveAll(Arrays.asList(usu1));

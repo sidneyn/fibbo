@@ -38,7 +38,12 @@ public class UsuarioDTO implements Serializable {
 	 
 	 @JsonFormat(pattern = "dd/MM/yyyy")
 	 protected LocalDate dataCriacao = LocalDate.now();
-	 		 
+	 	
+	 
+	public UsuarioDTO() {
+		super();
+	}
+
 	public UsuarioDTO(Usuario obj) {
 		 super();
 		 this.id = obj.getId();

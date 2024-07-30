@@ -1,16 +1,18 @@
 package com.fibbo.selecaofibbo.domain;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fibbo.selecaofibbo.domain.dtos.UsuarioDTO;   
 
 @Entity
-@Table (name = "usuario")
 public class Usuario implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -25,23 +27,24 @@ public class Usuario implements Serializable {
 	private String email;
 	private String cpf;
 	private String senha;
-		
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date dataCadastro;
+	
+	@JsonFormat(pattern = "dd/MM/yyyy")
+	private LocalDate dataCadastro = LocalDate.now();
 
 	public Usuario() {
 			super();
 	}
-
 	
-	public Usuario(Integer id, String nome, String email, String cpf, String senha) {
+	public Usuario(Integer id, String nome, String email, String cpf, String senha, LocalDate dataCadastro) {
 		super();
 		this.id = id;
 		this.nome = nome;
 		this.email = email;
 		this.cpf = cpf;
 		this.senha = senha;
+		this.dataCadastro = dataCadastro;
 	}
+
 
 
 	public Usuario(UsuarioDTO obj) { 
@@ -53,6 +56,7 @@ public class Usuario implements Serializable {
 		 this.senha = obj.getSenha();
 	}
 	
+
 	public List<Produto> getProdutos() {
 		return produtos;
 	}
@@ -101,11 +105,11 @@ public class Usuario implements Serializable {
 		this.senha = senha;
 	}
 
-	public Date getDataCadastro() {
+	public LocalDate getDataCadastro() {
 		return dataCadastro;
 	}
 
-	public void setDataCadastro(Date dataCadastro) {
+	public void setDataCadastro(LocalDate dataCadastro) {
 		this.dataCadastro = dataCadastro;
 	}
 	
