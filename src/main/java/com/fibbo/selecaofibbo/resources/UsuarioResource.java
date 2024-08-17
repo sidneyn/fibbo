@@ -23,7 +23,7 @@ import com.fibbo.selecaofibbo.domain.Usuario;
 import com.fibbo.selecaofibbo.service.UsuarioService;
 
 @RestController
-@RequestMapping(value = "/usuarios")
+@RequestMapping(value = "api/usuarios")
 public class UsuarioResource {
 	
 	@Autowired
